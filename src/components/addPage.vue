@@ -1,53 +1,53 @@
 <template>
   <div>
-    <p>添加动漫</p>
+    <p class="title">添加公寓信息</p>
     <form action="" :model="params">
       <div class="form-item">
-        name: <input type="text" name="name" id="" v-model="params.title">
+        寝室楼号: <input type="text" name="name" id="" v-model="params.flatnum">
       </div>
       <div class="form-item">
-        author: <input type="text" v-model="params.doctor">
+        总楼层数: <input type="text" v-model="params.floorsum">
       </div>
       <div class="form-item">
-        national: <input type="text" v-model="params.country">
+        总房间数: <input type="text" v-model="params.roomsum">
       </div>
       <div class="form-item">
-        year: <input type="text" v-model="params.year">
+        修建时间: <input type="text" v-model="params.starttime">
       </div>
     </form>
     <p></p>
-    <button @click="addCartoon(params)">Add cartoon</button>
-    <button @click="getBack">go back</button>
+    <el-button @click.native="addFlat(params)" size="mini">Add </el-button>
+    <el-button @click.native="getBack" size="mini">go back</el-button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-const defaultParams = {
-  title: '',
-  doctor: '',
-  country: '',
-  year: ''
+const defaultflats = {
+  flatnum: '',
+  floorsum: '',
+  roomsum: '',
+  starttime: ''
 }
 export default {
   data () {
     return {
-      params: {...defaultParams}
+      params: {...defaultflats}
     }
   },
   methods: {
     // 添加一条动漫信息
-    addCartoon (params) {
-      axios.post('/api/addCartoon', {
+    addFlat (params) {
+      axios.post('/api/addFlat', {
         ...params
       }).then(res => {
         if (res.data.code === 200) {
-          window.alert('Add cartoon successfully!')
+          window.alert('添加公寓信息成功!')
         }
       })
     },
     getBack () {
-      this.$router.push('/')
+      this.$router.push('/flat')
     }
   }
 }

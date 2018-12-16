@@ -1,46 +1,49 @@
 <template>
   <div>
-    <p>更改动漫信息</p>
+    <p>更改公寓信息</p>
     <form action="" :model="params">
       <div class="form-item">
-        name: <input type="text" name="name" id="" v-model="params.title">
+        floorsum: <input type="text" id=""  v-model="params.floorsum">
       </div>
       <div class="form-item">
-        author: <input type="text" v-model="params.doctor">
+        roomsum: <input type="text" v-model="params.roomsum">
       </div>
       <div class="form-item">
-        national: <input type="text" v-model="params.country">
+        starttime: <input type="text" v-model="params.starttime">
       </div>
     </form>
     <p></p>
-    <button @click="updateCartoon(params)">confirm</button>
-    <button @click="getBack">go back</button>
+    <el-button @click.native="updateFlat(params)" size="mini">提交</el-button>
+    <el-button @click.native="getBack" size="mini">返回</el-button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-const defaultParams = {
-  title: '',
-  doctor: '',
-  country: ''
+const defaultFlats = {
+  flatnum:'',
+  floorsum: '',
+  roomsum: '',
+  starttime: '',
 }
 export default {
   data () {
     return {
-      params: {...defaultParams}
+      params: {...defaultFlats}
     }
   },
   mounted () {
-    this.getCartoonDetail()
+    this.getFlatDetail()
   },
   methods: {
     // 获取动漫信息
-    getCartoonDetail () {
-      const _id = this.$route.params.id
-      axios.get('/api/findCartoonById', {
+    getFlatDetail () {
+      const flatnum = this.$route.params.id;
+      // alert(oo);
+      // console.log(flatnum);
+      axios.get('/api/findFlatById', {
         params: {
-          _id: _id
+          flatnum: flatnum
         }
       }).then(res => {
         if (res.data.code === 200) {
@@ -49,17 +52,28 @@ export default {
       })
     },
     // 更改此动漫信息
-    updateCartoon (params) {
-      axios.post('/api/updateCartoon', {
-        ...params
-      }).then(res => {
-        if (res.data.code === 200) {
-          window.alert('Update cartoon successfully!')
-        }
-      })
+    updateFlat (params) {
+      if(!this.params.floorsum){
+        alert("请填写楼层总数");
+      }
+      else if(!this.params.roomsum){
+        alert("请填写房间总数");
+      }
+      else if(!this.params.starttime){
+        alert("请填写修建时间");
+      }
+      else{
+        axios.post('/api/updateFlat', {
+          ...params
+        }).then(res => {
+          if (res.data.code === 200) {
+            window.alert('修改成功！')
+          }
+        })
+      }
     },
     getBack () {
-      this.$router.push('/')
+      this.$router.push('/flat')
     }
   }
 }

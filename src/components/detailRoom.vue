@@ -1,48 +1,51 @@
 <template>
 <div class="container">
-  <p class="title">公寓详情</p>
+  <p class="title">寝室详情</p>
   <table class="atable">
       <thead>
         <tr>
+          <th>roomnum</th>
+          <th>capacity</th>
+          <th>fee</th>
+          <th>roomtel</th>
           <th>flatnum</th>
-          <th>floorsum</th>
-          <th>roomsum</th>
-          <th>starttime</th>
         </tr>
       </thead>
       <tbody>
            <tr v-for="(item, index) in params" :key="index">
+            <td>{{item.roomnum}}</td>
+            <td>{{item.capacity}}</td>
+            <td>{{item.fee}}</td>
+            <td>{{item.roomtel}}</td>
             <td>{{item.flatnum}}</td>
-            <td>{{item.floorsum}}</td>
-            <td>{{item.roomsum}}</td>
-            <td>{{item.starttime}}</td>
           </tr>
       </tbody>
     </table>
     <el-button size="mini" class="btn" @click.native="goback()">go back</el-button>
+
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
-  name: 'detail',
+  name: 'detailRoom',
   data () {
     return {
       params: []
     }
   },
   mounted () {
-    this.getFlatDetail()
+    this.getRoomDetail()
   },
   methods: {
     // 获取动漫信息
-    getFlatDetail () {
-      const flatnum = this.$route.params.id;
-      // alert(flatnum);
-      axios.get('/api/findFlatById', {
+    getRoomDetail () {
+      const roomnum = this.$route.params.r;
+    //   alert(roomnum);
+      axios.get('/api/findRoomById', {
         params: {
-          flatnum: flatnum
+          roomnum: roomnum
         }
       }).then(res => {
         if (res.data.code === 200) {
@@ -51,7 +54,7 @@ export default {
       })
     },
     goback(){
-      this.$router.push("/flat");
+      this.$router.push('/room');
     }
   }
 }

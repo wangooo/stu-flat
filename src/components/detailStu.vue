@@ -1,21 +1,31 @@
 <template>
 <div class="container">
-  <p class="title">公寓详情</p>
+  <p class="title">学生详情</p>
   <table class="atable">
       <thead>
         <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>sex</th>
+          <th>nation</th>
+          <th>study</th>
+          <th>class</th>
+          <th>tel</th>
           <th>flatnum</th>
-          <th>floorsum</th>
-          <th>roomsum</th>
-          <th>starttime</th>
+          <th>roomnum</th>
         </tr>
       </thead>
       <tbody>
            <tr v-for="(item, index) in params" :key="index">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.sex}}</td>
+            <td>{{item.nation}}</td>
+            <td>{{item.study}}</td>
+            <td>{{item.class}}</td>
+            <td>{{item.tel}}</td>
             <td>{{item.flatnum}}</td>
-            <td>{{item.floorsum}}</td>
-            <td>{{item.roomsum}}</td>
-            <td>{{item.starttime}}</td>
+            <td>{{item.roomnum}}</td>
           </tr>
       </tbody>
     </table>
@@ -26,23 +36,23 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'detail',
+  name: 'detailRoom',
   data () {
     return {
       params: []
     }
   },
   mounted () {
-    this.getFlatDetail()
+    this.getStuDetail()
   },
   methods: {
     // 获取动漫信息
-    getFlatDetail () {
-      const flatnum = this.$route.params.id;
-      // alert(flatnum);
-      axios.get('/api/findFlatById', {
+    getStuDetail () {
+      const id = this.$route.params.sid;
+    //   alert(roomnum);
+      axios.get('/api/findStuById', {
         params: {
-          flatnum: flatnum
+          id: id
         }
       }).then(res => {
         if (res.data.code === 200) {
@@ -51,13 +61,12 @@ export default {
       })
     },
     goback(){
-      this.$router.push("/flat");
+      this.$router.push('/student');
     }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
@@ -86,3 +95,4 @@ a {
   padding:20px;
 }
 </style>
+

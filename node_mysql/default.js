@@ -3,9 +3,9 @@ const config = {
   database: {
     host: '127.0.0.1',
     user: 'root',
-    password: '123456',
+    password: 'OTTwsy1122~',
     port: '3306',
-    database: 'learn_practice'
+    database: 'student'
   }
 }
 module.exports = config
